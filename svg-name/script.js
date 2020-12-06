@@ -1,33 +1,16 @@
-const path = document.querySelectorAll('.name')
-let currentFrame = 0
-let total_frames = 60
+const paths = document.querySelectorAll('.name')
+const logo = document.querySelectorAll('.logo')
+paths.forEach((path) => {
+  console.log(path)
+  const length = path.getTotalLength()
+  // path.style.transition = path.style.webkitTransition = 'none'
+  path.style.strokeDasharray = `${length} ${length}`
+  path.style.strokeDashoffset = length
 
-const length = []
+  path.getBoundingClientRect()
 
-console.log(path)
+  path.style.transition = path.style.webkitTransition =
+    'stroke-dashoffset 2s ease-in-out'
 
-path.forEach((letter) => {
-  let l = 0
-  l = letter.getTotalLength()
-  length.push(l)
-  letter.style.strokeDasharray = `${l} ${l}`
-  letter.style.strokeDashoffset = l
+  path.style.strokeDashoffset = '0'
 })
-console.log(length)
-
-let handle = 0
-
-const draw = () => {
-  let progress = currentFrame / total_frames
-  if (progress > 1) {
-    window.cancelAnimationFrame(handle)
-  } else {
-    currentFrame++
-    path.forEach((letter) => {
-      letter.style.strokeDashoffset = Math.floor(letter * (1 - progress))
-    })
-    handle = window.requestAnimationFrame(draw)
-  }
-}
-
-draw()
